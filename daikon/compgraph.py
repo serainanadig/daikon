@@ -39,7 +39,7 @@ def define_computation_graph(source_vocab_size: int, target_vocab_size: int, bat
         decoder_inputs_embedded = tf.nn.embedding_lookup(target_embedding, decoder_inputs)
 
     with tf.variable_scope("Encoder"):
-        dropout_rate = tf.placeholder(tf.float32)
+        dropout_rate = 0.2
         encoder_cell = tf.contrib.rnn.LSTMCell(C.HIDDEN_SIZE)
         encoder_cell = tf.contrib.rnn.DropoutWrapper(
                 encoder_cell, output_keep_prob=1-dropout_rate)
@@ -48,13 +48,10 @@ def define_computation_graph(source_vocab_size: int, target_vocab_size: int, bat
                                                                  encoder_inputs_embedded,
                                                                  initial_state=initial_state,
                                                                  dtype=tf.float32)
-#    with tf.variable_scope("Dropout"):
-#        dropout_rate = tf.placeholder(tf.float32)
-#        encoder_outputs_drop = tf.nn.dropout(encoder_outputs, rate=dropout_rate) #???
        
         
     with tf.variable_scope("Decoder"):
-        dropout_rate = tf.placeholder(tf.float32)
+        dropout_rate = 0.2
         decoder_cell = tf.contrib.rnn.LSTMCell(C.HIDDEN_SIZE)
         decoder_cell = tf.contrib.rnn.DropoutWrapper(
                 decoder_cell, output_keep_prob=1-dropout_rate)
