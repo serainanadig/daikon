@@ -41,7 +41,7 @@ def define_computation_graph(source_vocab_size: int, target_vocab_size: int, bat
     with tf.variable_scope("Encoder"):
         dropout_rate = tf.placeholder(tf.float32)
         encoder_cell = tf.contrib.rnn.LSTMCell(C.HIDDEN_SIZE)
-        encoder_cell = tf.contrib.rnn.DropoutWrapper)(
+        encoder_cell = tf.contrib.rnn.DropoutWrapper(
                 encoder_cell, output_keep_prob=1-dropout_rate)
         initial_state = encoder_cell.zero_state(batch_size, tf.float32)
         encoder_outputs, encoder_final_state = tf.nn.dynamic_rnn(encoder_cell,
